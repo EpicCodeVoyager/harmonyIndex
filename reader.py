@@ -58,8 +58,8 @@ Lines = file.readlines()
 conjugate_list = [x.strip('\n') for x in Lines if x != '\n']
 
 
-print(conjugate_list)
-print(conjugate_list.__len__())
+print(conjugate_list) # List of tables and columns
+print(conjugate_list.__len__()) # 36 total columns
 
 # Initiating dataframe that from the table that has the highest number of rows
 # Setting the first row of Counrty names as index
@@ -81,11 +81,9 @@ for i in conjugate_list:
     # Create Pandas series object with index as countries.
     s = pd.Series(df[0].loc[:, ast.literal_eval(res[1])].tolist(), index=df[0].iloc[:, 0].tolist())
     # Series created using pandas series object  as list. Else was giving Nan values
-    # print(s)
-    # print(len(s)) # Checking longest column to use its index as index for all. economic_unemployment -> 264 rows. Modified code above to vreate main dataframe with index as countries
-    frame[res[1]] = s # add series for each table into main dataframe
+    frame[res[1]] = s # add series for each table-coulumn into initiated dataframe
 
-print(frame)
+print(frame) # Collected dataframe
 # ToDo: Pay attention here.
 frame.replace(to_replace="..", value=0, inplace=True)
 frame.to_csv('./'+'my_df.csv')
