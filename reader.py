@@ -11,30 +11,11 @@ def imputator():
     df = df.set_index('Country')
     print(df.head())
 
-    # countries = df.index.tolist()
-    # naList = []  # list of countries that has missing values
-
-    # Creating a list of the countries that has missing values
-    # for i in range(len(df.index)):
-    #     if df.iloc[i].isnull().sum() != 0:
-    #         print(countries[i], " : ", df.iloc[i].isnull().sum())
-    #         naList.append(i)
-
     initial_num_of_rows = len(df.index)
     print(initial_num_of_rows)
-
-    # Most of the countries that have NA values have missing values for most of the columns.
-    # 34 and 30 out of 36 columns
-    # removing those countries from the dainplaceboolta frame
     df.replace(to_replace="..", value=np.NaN, inplace=True)
     df.dropna(inplace=True, thresh=31) # keep rows containing at least 31 non null values
-
-    print(len(df.index))
-    # for i in naList:
-    #     df = df.drop(index=countries[i])
-    # print(len(df.index))
-    df = pd.to_numeric(df)
-    print(df.mean(axis=1))
+    df[df.columns] = df[df.columns].apply(pd.to_numeric, errors='coerce')
     df.fillna(df.mean(), inplace=True)
 
     print('\nNumber of columns removed: ', initial_num_of_rows - len(df.index))
@@ -43,15 +24,14 @@ def imputator():
     return df
 
 
-def get_pca_df(country_df):
-    x = StandardScaler().fit_transform(country_df)
-    #print(x.shape)
-    pca = PCA(n_components=4)
-    # ToDo: Need a better cleanup.
+def get_pca_df(df):
+    x = StandardScaler().fit_transform(df) # Standardise the columns data and return a Numpy array
+    print(type(x))
+    exit(1)
+    pca = PCA(n_components=36) # PCA object created
     #x = np.nan_to_num(x)
     pcaComp = pca.fit_transform(x)
-    principalDf = pd.DataFrame(data=pcaComp
-                                , columns=['pc1', 'pc2', 'pc3', 'pc4'])
+    principalDf = pd.DataFrame(data=pcaComp, columns=["pca_"+x for x in df.columns.to_list()])
     print("**************")
     principalDf.to_csv('./'+ 'pca-4d.csv')
     pca_list = pca.explained_variance_ratio_
@@ -95,4 +75,4 @@ for i in conjugate_list:
 
 frame.to_csv('./'+'my_df.csv')
 corrected_frame = imputator()
-#get_pca_df(corrected_frame)
+get_pca_df(corrected_frame)
