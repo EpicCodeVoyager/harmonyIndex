@@ -11,28 +11,36 @@ def imputator():
     df = df.set_index('Country')
     print(df.head())
 
-    countries = df.index.tolist()
-    naList = []  # list of countries that has missing values
+    # countries = df.index.tolist()
+    # naList = []  # list of countries that has missing values
 
     # Creating a list of the countries that has missing values
-    for i in range(len(df.index)):
-        if df.iloc[i].isnull().sum() != 0:
-            print(countries[i], " : ", df.iloc[i].isnull().sum())
-            naList.append(i)
+    # for i in range(len(df.index)):
+    #     if df.iloc[i].isnull().sum() != 0:
+    #         print(countries[i], " : ", df.iloc[i].isnull().sum())
+    #         naList.append(i)
 
     initial_num_of_rows = len(df.index)
+    print(initial_num_of_rows)
 
     # Most of the countries that have NA values have missing values for most of the columns.
     # 34 and 30 out of 36 columns
+    # removing those countries from the dainplaceboolta frame
+    df.replace(to_replace="..", value=np.NaN, inplace=True)
+    df.dropna(inplace=True, thresh=31) # keep rows containing at least 31 non null values
 
-    # removing those countries from the data frame
-    for i in naList:
-        df = df.drop(index=countries[i])
+    print(len(df.index))
+    # for i in naList:
+    #     df = df.drop(index=countries[i])
+    # print(len(df.index))
+    df = pd.to_numeric(df)
+    print(df.mean(axis=1))
+    df.fillna(df.mean(), inplace=True)
 
-    df_removedNA = df
-    print('\nNumber of columns removed: ', initial_num_of_rows - len(df_removedNA.index))
-    df_removedNA.to_csv('./' + 'my_df_removedNA.csv')
-    return df_removedNA
+    print('\nNumber of columns removed: ', initial_num_of_rows - len(df.index))
+
+    df.to_csv('./' + 'my_df_removedNA.csv')
+    return df
 
 
 def get_pca_df(country_df):
@@ -58,8 +66,8 @@ Lines = file.readlines()
 conjugate_list = [x.strip('\n') for x in Lines if x != '\n']
 
 
-print(conjugate_list) # List of tables and columns
-print(conjugate_list.__len__()) # 36 total columns
+#print(conjugate_list) # List of tables and columns
+#print(conjugate_list.__len__()) # 36 total columns
 
 # Initiating dataframe that from the table that has the highest number of rows
 # Setting the first row of Counrty names as index
@@ -69,11 +77,11 @@ index0 = df0[0].loc[:, ('Unnamed: 0_level_0', 'Unnamed: 0_level_1')]
 data = df0[0].loc[:, ('Unemployment, male (% of male labor force) (modeled ILO estimate)', '2018')].tolist()
 
 # Print number of rows of the initiated dataframe
-print(len(index0))
+#print(len(index0))
 
 frame = pd.DataFrame({'Country':index0, "('Unemployment, male (% of male labor force) (modeled ILO estimate)', '2018')":data})
 frame = frame.set_index('Country')
-print(frame)
+#print(frame)
 
 for i in conjugate_list:
     res = i.split('^')
@@ -83,9 +91,8 @@ for i in conjugate_list:
     # Series created using pandas series object  as list. Else was giving Nan values
     frame[res[1]] = s # add series for each table-coulumn into initiated dataframe
 
-print(frame) # Collected dataframe
-# ToDo: Pay attention here.
-frame.replace(to_replace="..", value=0, inplace=True)
+#print(frame) # Collected dataframe
+
 frame.to_csv('./'+'my_df.csv')
 corrected_frame = imputator()
-get_pca_df(corrected_frame)
+#get_pca_df(corrected_frame)
