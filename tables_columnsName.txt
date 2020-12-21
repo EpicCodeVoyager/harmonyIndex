@@ -1,0 +1,75 @@
+data/economic_employment.xls^('Employment to population ratio', 'Total', '% ages 15 and older', '2018')
+
+data/economic_unemployment.xls^('Unemployment, male (% of male labor force) (modeled ILO estimate)', '2018')
+data/economic_unemployment.xls^('Unemployment, female (% of female labor force) (modeled ILO estimate)', '2018')
+
+data/economic_gdp.xls^('Gross domestic product', '$ billions', '2019')
+
+data/health_expenditure.xls^('Health expenditure', 'Current', '% of GDP', '2017')
+data/health_expenditure.xls^('Health expenditure', 'Public', '% of current', '2017')
+
+data/health_access_water_sanitation.xls^('People using safely managed drinking water services', 'Unnamed: 2_level_1', '% of population', '2017')
+data/health_access_water_sanitation.xls^('People using safely managed sanitation services', 'Unnamed: 4_level_1', '% of population', '2017')
+
+data/health_maternal_mortality.xls^('Lifetime risk of maternal mortality', 'Unnamed: 10_level_1', 'Probability 1 woman in:', '2017')
+
+data/health_undernourishment.xls^('Prevalence of undernourishment', 'Unnamed: 2_level_1', '% of population', '2018')
+
+data/health_risk.xls^('Prevalence of smoking', 'Male', '% of adults', '2016')
+data/health_risk.xls^('Prevalence of smoking', 'female', '% of adults', '2016')
+
+data/health_risk.xls^('Cause of death', 'Communicable diseases and maternal, prenatal, and nutrition conditions', '% of population', '2016')
+data/health_risk.xls^('Cause of death', 'Non-communicable diseases', '% of population', '2016')
+
+
+data/social_mortality.xls^('Life expectancy at birth', 'Unnamed: 2_level_1', 'years', '2018')
+
+data/social_mortality.xls^('Neonatal mortality rate', 'Unnamed: 4_level_1', 'per 1,000 live births', '2019')
+
+data/social_mortality.xls^('Infant mortality rate', 'Unnamed: 6_level_1', 'per 1,000 live births', '2019')
+
+data/social_mortality.xls^('Adult mortality rate', 'Male', 'per 1,000', '2013-18')
+data/social_mortality.xls^('Adult mortality rate', 'female', 'per 1,000', '2013-18')
+
+
+data/education_intake_and_transition.xls^('Gross intake ratio in first grade of primary education', 'Male', '% of relevant age group', '2018')
+data/education_intake_and_transition.xls^('Gross intake ratio in first grade of primary education', 'female', '% of relevant age group', '2018')
+
+data/education_intake_and_transition.xls^('Transition rate to secondary education', 'Male', '%', '2017')
+data/education_intake_and_transition.xls^('Transition rate to secondary education', 'female', '%', '2017')
+
+data/education_literacy.xls^('Youth literacy rate', 'Male', '% of ages 15-24', '2010-19')
+data/education_literacy.xls^('Youth literacy rate', 'female', '% of ages 15-24', '2010-19')
+
+data/education_literacy.xls^('Adult literacy rate', 'Male', '% ages 15 and older', '2010-19')
+data/education_literacy.xls^('Adult literacy rate', 'female', '% ages 15 and older', '2010-19')
+
+data/education_literacy.xls^('Primary completion rate', 'Male', '% of relevant age group', '2018')
+data/education_literacy.xls^('Primary completion rate', 'female', '% of relevant age group', '2018')
+
+data/education_literacy.xls^('Lower secondary completion rate', 'Male', '% of relevant age group', '2018')
+data/education_literacy.xls^('Lower secondary completion rate', 'female', '% of relevant age group', '2018')
+
+data/social_access_electricity.xls^('Access to electricity', 'Unnamed: 7_level_1', '% of population', '2015')
+
+
+data/general_stats_area_population.xls^('Gross national income per capita, Atlas method', 'Unnamed: 5_level_1', '$', '2019')
+
+data/general_stats_area_population.xls^('Population', 'Unnamed: 1_level_1', 'millions', '2019')
+
+data/general_stats_area_population.xls^('Surface area', 'Unnamed: 2_level_1', 'sq. km thousands', '2019')
+
+data/general_stats_area_population.xls^('Population density', 'Unnamed: 3_level_1', 'people per sq. km', '2019')
+
+
+
+
+
+
+
+
+
+
+
+
+
