@@ -1,6 +1,7 @@
 import pandas as pd
 import ast
 import numpy as np
+import os
 
 csv_dir = './intermediate_results/'
 threshold = 31
@@ -21,6 +22,10 @@ def imputator(thr):
     print("Generating: {}".format(csv_dir + 'filtered_country.csv\n'))
     df.to_csv(csv_dir + 'filtered_country.csv')
     return df
+
+# Generating folder if not available.
+if not os.path.exists('intermediate_results'):
+    os.makedirs('intermediate_results')
 
 # Reading tables' and columns' names
 file = open('tables_columnsName.txt', 'r')
