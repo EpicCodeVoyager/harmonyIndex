@@ -17,3 +17,12 @@ plt.title('Covid Death Country Wise')
 plt.xticks(rotation=90)
 ax.plot(x_l, y_l, linestyle='solid', color="blue", linewidth=1, label="pnl")
 plt.show()
+# ToDO:
+'''
+Make a function for scatter plot for individual column and call it in a loop.
+save plots in jpeg in plot directory. ( create plot dir)
+These contains the pvalues and columns. 
+list(fit.pvalues)
+fit.pvalues.axes[0].values.tolist()
+create a filter based on pvalue threshold.
+'''
