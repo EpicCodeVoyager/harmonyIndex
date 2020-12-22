@@ -1,5 +1,7 @@
 import pandas as pd
 
+csv_dir = './intermediate_results/'
+data_dir = './data/'
 
 # function that returns common countries in both dataframes
 def intersection(lst1, lst2):
@@ -14,14 +16,12 @@ def uncommon(lst1, lst2):
 # function that prints the countries of both dataframes that have common substring of length > 4
 # Some countries have different names (Different cases, short form names) in the indexes
 def spell_error_detect(predictor_list, covid_list):
-    print(covid_list)
-    print(predictor_list)
-
+    print('List of country names represented differently in predictor data and COVID data, respectively')
     for i in predictor_list:
         for j in covid_list:
             answer = longestSubstringFinder(j,i)
             if len(answer) > 4:
-                print(i, ':', j)
+                print(i, ':', j, end=', ')
 
 # function implementing longest common substring problem
 def longestSubstringFinder(string1, string2):
@@ -55,7 +55,6 @@ def retain_common_index(pred_df, covid_df, country_map):
         pred_df.index = pred_indexes
 
     index_to_retain = intersection(covid_df.index.tolist(), predictor_df.index.tolist())
-    print(index_to_retain, '###################')
     covid_df = covid_df.loc[index_to_retain]
     pred_df = pred_df.loc[index_to_retain]
     return covid_df, pred_df
@@ -75,21 +74,15 @@ def equalize(covid_df, predictor_df):
 
     return retain_common_index(predictor_df, covid_df, country_map)
 
-covid_df = pd.read_csv('./' + 'data/covid_worldometer.csv')
-predictor_df = pd.read_csv("./my_df_removedNA.csv")
+covid_df = pd.read_csv(data_dir + 'covid_worldometer.csv', index_col=0)
+predictor_df = pd.read_csv(csv_dir + "filtered_country.csv", index_col=0)
 
 # Convert indexes of predictor and covid dataframes to contain only lower case
-predictor_df.set_index('Country', inplace=True)
 predictor_df.index = predictor_df.index.str.lower()
-covid_df.set_index('country', inplace=True)
 covid_df.index = covid_df.index.str.lower()
 
 covid_df, predictor_df = equalize(covid_df, predictor_df)
-covid_df.to_csv('./'+'covid.csv')
-predictor_df.to_csv('./'+'predictor.csv')
+print("\nGenerating: {}, {}".format(csv_dir+'predictor.csv', csv_dir+'covid.csv'))
+predictor_df.to_csv(csv_dir + 'predictor.csv')
+covid_df.to_csv(csv_dir + 'covid.csv')
 
-
-'''Replace corrected index in predictor df DONE
-    TODO drop uncommon countries from both df DONE
-    Clean covid data DONE
-'''
