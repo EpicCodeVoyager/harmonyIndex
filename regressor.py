@@ -39,6 +39,8 @@ model_sm = sm.OLS(y, x2)
 fit = model_sm.fit()
 print(fit.summary())
 
+list(fit.pvalues)
+fit.pvalues.axes[0].values.tolist()
 
 x.to_csv(csv_dir + 'reduced_predictors.csv')
 
