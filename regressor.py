@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn import datasets, linear_model
 import statsmodels.api as sm
-from scipy import stats
 
 csv_dir = './intermediate_results/'
 # Function to remove multi collinearity
@@ -33,14 +30,15 @@ x = remove_highly_correlated_columns(x, threshold)
 
 model = LinearRegression()
 model.fit(x, y)
+r_square = model.score(x, y)
+print('\nCoefficient of determination:', r_square)
 
-r_sq = model.score(x, y)
-print('\nCoefficient of determination:', r_sq)
+# Using statsmodels for printing the regression summary
+x2 = sm.add_constant(x)
+model_sm = sm.OLS(y, x2)
+fit = model_sm.fit()
+print(fit.summary())
 
-X2 = sm.add_constant(x)
-est = sm.OLS(y, X2)
-est2 = est.fit()
-print(est2.summary())
 
 x.to_csv(csv_dir + 'reduced_predictors.csv')
 

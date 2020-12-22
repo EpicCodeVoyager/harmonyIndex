@@ -6,6 +6,7 @@ import os
 csv_dir = './intermediate_results/'
 threshold = 31
 
+# removing rows that have more null values and imputating the rest
 def imputator(thr):
     print("****Imputating the data...")
     df = pd.read_csv(csv_dir + 'raw_country.csv')
@@ -14,7 +15,7 @@ def imputator(thr):
     initial_num_of_rows = len(df.index)
     print('Initial number of rows: ' + str(initial_num_of_rows))
     df.replace(to_replace="..", value=np.NaN, inplace=True)
-    df.dropna(inplace=True, thresh=thr) # keep rows containing at least 31 non null values
+    df.dropna(inplace=True, thresh=thr)  # keep rows containing at least 31 non null values
     df[df.columns] = df[df.columns].apply(pd.to_numeric, errors='coerce')
     df.fillna(df.mean(), inplace=True)
 
