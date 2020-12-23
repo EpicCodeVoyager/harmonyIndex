@@ -15,4 +15,8 @@ echo 'Running regressor'
 python regressor.py
 sleep 2
 
+echo ''
+echo 'Running plotter'
+python plotter.py
+sleep 2
 #python plotter.py

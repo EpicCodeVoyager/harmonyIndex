@@ -6,6 +6,7 @@ from regressor import sm_fit
 csv_dir = './intermediate_results/'
 plots_dir = './plots/'
 
+
 def plot_linear_fit(column):
     plt.figure(figsize=(10, 6))
     x_l = x[column].values.reshape(-1, 1)
@@ -15,9 +16,10 @@ def plot_linear_fit(column):
     plt.style.use('bmh')
     plt.xlabel(column)
     plt.ylabel('Deaths Per Million')
-    plt.scatter(x_l, y_l, color='g')
-    plt.plot(x_l, model2.predict(x_l), color='k')
+    plt.scatter(x_l, y_l, color='g', alpha=0.5)
+    plt.plot(x_l, model2.predict(x_l), color='b', linewidth=0.5)
     plt.savefig(plots_dir + column + '.png')
+
 
 def plot_deaths_per_million(y):
     plt.figure()
@@ -34,6 +36,7 @@ def plot_deaths_per_million(y):
     ax.plot(x_l, y_l, linestyle='solid', color="blue", linewidth=1, label="pnl")
     plt.savefig(plots_dir + 'Deaths_Per_Million_Chart' + '.png')
 
+
 x = pd.read_csv(csv_dir + "reduced_predictors.csv", index_col=0)
 y = pd.read_csv(csv_dir + "covid.csv", index_col=0)
 y = y['deaths_per_1M']
@@ -41,12 +44,12 @@ y = y['deaths_per_1M']
 fit = sm_fit(x, y)
 
 # Obtain list of significant columns (p-value < 0.05)
-to_plot = [j for (i, j) in zip(fit.pvalues.to_list(), fit.pvalues.axes[0].values.tolist()) if i <= 0.049]
+to_plot = [j for (i, j) in zip(fit.pvalues.to_list(), fit.pvalues.axes[0].values.tolist()) if i <= 0.05]
 
 # Plot fitting line for individual significant column vs deaths per million
 for i in to_plot:
     plot_linear_fit(i)
 
 # Plot number of deaths per million chart for each country ascending order
-y = pd.read_csv(csv_dir + "covid.csv")
-plot_deaths_per_million(y)
+covid_deaths = pd.read_csv(csv_dir + "covid.csv")
+plot_deaths_per_million(covid_deaths)
