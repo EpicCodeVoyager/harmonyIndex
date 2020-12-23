@@ -1,35 +1,52 @@
 from matplotlib import pyplot as plt
 from sklearn.linear_model import LinearRegression
 import pandas as pd
-from regressor import remove_highly_correlated_columns
-import statsmodels.api as sm
+from regressor import sm_fit
+
 csv_dir = './intermediate_results/'
-reduced_predictors = pd.read_csv(csv_dir + 'reduced_predictors.csv', index_col=0)
+plots_dir = './plots/'
+
+def plot_linear_fit(column):
+    plt.figure(figsize=(10, 6))
+    x_l = x[column].values.reshape(-1, 1)
+    y_l = y.values.reshape(-1, 1)
+    model2 = LinearRegression()
+    model2.fit(x_l, y_l)
+    plt.style.use('bmh')
+    plt.xlabel(column)
+    plt.ylabel('Deaths Per Million')
+    plt.scatter(x_l, y_l, color='g')
+    plt.plot(x_l, model2.predict(x_l), color='k')
+    plt.savefig(plots_dir + column + '.png')
+
+def plot_deaths_per_million(y):
+    plt.figure()
+    y.sort_values(by=["deaths_per_1M"], inplace=True)
+    x_l = y['country'].tolist()
+    y_l = y['deaths_per_1M'].tolist()
+    plt.style.use('bmh')
+    fig, ax = plt.subplots(figsize=(20, 8))
+    plt.axhline(y=0, color='red', linestyle=':', alpha=.55)
+    plt.ylabel('Deaths Per Million')
+    plt.xlabel('Country')
+    plt.title('Covid Death Country Wise')
+    plt.xticks(rotation=90)
+    ax.plot(x_l, y_l, linestyle='solid', color="blue", linewidth=1, label="pnl")
+    plt.savefig(plots_dir + 'Deaths_Per_Million_Chart' + '.png')
 
 x = pd.read_csv(csv_dir + "reduced_predictors.csv", index_col=0)
 y = pd.read_csv(csv_dir + "covid.csv", index_col=0)
 y = y['deaths_per_1M']
-threshold = 0.7
-print(x.columns)
-x_l = x['Unemployment, male % of male labor force modeled ILO estimate, 2018'].values.reshape(-1, 1)
 
-y_l = y.values.reshape(-1, 1)
+fit = sm_fit(x, y)
 
-print(x_l)
-print('***')
-print(x['Unemployment, male % of male labor force modeled ILO estimate, 2018'])
-# X = data.iloc[:, 0].values.reshape(-1, 1) # values converts it into a numpy array
-# Y = data.iloc[:, 1].values.reshape(-1, 1) # -1 means that calculate the dimension of rows, but have 1 column
-# linear_regressor = LinearRegression() # create object for the class
-# linear_regressor.fit(X, Y) # perform linear regression
-# Y_pred = linear_regressor.predict(X)
-# plt.scatter(X, Y)
-# plt.plot(X, Y_pred, color='red')
-# plt.show()
+# Obtain list of significant columns (p-value < 0.05)
+to_plot = [j for (i, j) in zip(fit.pvalues.to_list(), fit.pvalues.axes[0].values.tolist()) if i <= 0.049]
 
-model2 = LinearRegression()
-model2.fit(x_l, y_l)
-plt.scatter(x_l, y_l, color='g')
-# what does the model2.predict gives ??
-plt.plot(x_l, model2.predict(x_l), color='k')
-plt.show()
+# Plot fitting line for individual significant column vs deaths per million
+for i in to_plot:
+    plot_linear_fit(i)
+
+# Plot number of deaths per million chart for each country ascending order
+y = pd.read_csv(csv_dir + "covid.csv")
+plot_deaths_per_million(y)
